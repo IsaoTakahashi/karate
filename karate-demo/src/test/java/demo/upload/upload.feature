@@ -8,6 +8,7 @@ Scenario: upload file
     # refer to the second scenario in this file for how to set the upload filename using the 'multipart file' syntax
     And multipart field myFile = read('test.pdf')
     And multipart field message = 'hello world'
+    And retry until responseStatus == 201
     When method post
     Then status 200
     And match response == { id: '#uuid', filename: 'myFile', message: 'hello world', contentType: 'application/octet-stream' }
